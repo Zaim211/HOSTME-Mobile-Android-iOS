@@ -8,12 +8,17 @@ Welcome to HostMe-Mobile 🌟, an innovative platform reimagining the concept of
 
 Table of Contents 📚
 ---
+🤸 Quick Start
+---
 Features
 ---
 Tech Stack
 ---
 
 
+
+---
+Please Scan the QR code below (android && ios):
 
 ---
 Features ✨
