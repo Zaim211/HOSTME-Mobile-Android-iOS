@@ -21,7 +21,6 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 export default function Create() {
   const { user } = useGlobalContext();
   const { id } = useLocalSearchParams();
-  const [redirect, setRedirect] = useState(false);
   const [title, setTitle] = useState("");
   const [addedPhotos, setAddedPhotos] = useState([]);
   const [address, setAddress] = useState("");
@@ -117,18 +116,9 @@ export default function Create() {
         price,
         selectedPerks,
         addedPhotos: uploadedPhotos,
-      };
-      
-      if (id) {
-        response = await client.put("/api/places", {
-          id,
-          ...placeData,
-        });
-        setRedirect(true);
-      } else {
-        response = await client.post("/api/places", placeData);
-        setRedirect(true);
-      }
+      }; 
+     response = await client.post("/api/places", placeData);
+     router.push('/profile')
     } catch (error) {
       console.error("Error creating/updating place:", error);
       Alert.alert("An error occurred. Please try again.");
@@ -137,9 +127,6 @@ export default function Create() {
     }
   };
 
-  if (redirect) {
-    return <Redirect href="/profile" />;
-  }
 
   return (
     <SafeAreaView className="h-full bg-white">
