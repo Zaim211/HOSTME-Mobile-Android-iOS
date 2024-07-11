@@ -107,45 +107,45 @@ class PlaceController {
      res.json(await Place.findById(id));
   }
 
-  static async updatePlaces(req, res) {
-    // Update a place
-    mongoose.connect(process.env.MONGO_URL);
-    const { token } = req.cookies;
-    const {
-      id,
-      title,
-      address,
-      addedPhotos,
-      description,
-      selectedPerks,
-      extraInfo,
-      checkIn,
-      checkOut,
-      maxGuests,
-      price,
-    } = req.body;
-    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-      if (err) throw err;
-      const placeDoc = await Place.findById(id);
-      if (userData.id === placeDoc.owner.toString()) {
-        placeDoc.set({
-          title,
-          address,
-          photos: addedPhotos,
-          description,
-          selectedPerks,
-          extraInfo,
-          checkIn,
-          checkOut,
-          maxGuests,
-          price,
-        });
-        await placeDoc.save();
-        res.status(200).json("Saved!");
-      } else {
-        res.status(401).json({ message: "Unauthorized" });
-      }
-    });
+  // static async updatePlaces(req, res) {
+  //   // Update a place
+  //   mongoose.connect(process.env.MONGO_URL);
+  //   const { token } = req.cookies;
+  //   const {
+  //     id,
+  //     title,
+  //     address,
+  //     addedPhotos,
+  //     description,
+  //     selectedPerks,
+  //     extraInfo,
+  //     checkIn,
+  //     checkOut,
+  //     maxGuests,
+  //     price,
+  //   } = req.body;
+  //   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+  //     if (err) throw err;
+  //     const placeDoc = await Place.findById(id);
+  //     if (userData.id === placeDoc.owner.toString()) {
+  //       placeDoc.set({
+  //         title,
+  //         address,
+  //         photos: addedPhotos,
+  //         description,
+  //         selectedPerks,
+  //         extraInfo,
+  //         checkIn,
+  //         checkOut,
+  //         maxGuests,
+  //         price,
+  //       });
+  //       await placeDoc.save();
+  //       res.status(200).json("Saved!");
+  //     } else {
+  //       res.status(401).json({ message: "Unauthorized" });
+  //     }
+  //   });
   }
 
   static async deletePlace(req, res) {
