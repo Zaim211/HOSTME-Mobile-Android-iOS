@@ -26,7 +26,7 @@ router.post('/api/places', PlaceController.createPlaces)
 router.get('/api/user-places', PlaceController.getUserPlaces)
 router.get('/api/places', PlaceController.getAllPlaces)
 router.get('/api/places/:id', PlaceController.getPlaceById)
-router.put('/api/places', PlaceController.updatePlaces)
+// router.put('/api/places', PlaceController.updatePlaces)
 router.delete('/api/places/:id', PlaceController.deletePlace)
 router.get('/api/latest-places', PlaceController.getLatestPlaces);
 
