@@ -38,6 +38,7 @@ Features ✨
 - Hostinging Management 📅
 - Image Uploads to S3 ☁️
 - Responsive Design 📱
+- Integration with Google Maps for address picking using Google Maps API Console 🗺️
 
 ---
 Tech Stack 🛠️
