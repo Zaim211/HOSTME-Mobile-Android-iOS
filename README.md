@@ -26,7 +26,7 @@ Quick Start 🤸
 ---
 Please Scan the QR code below (android && ios):
 
-![Capture](https://github.com/Zaim211/HOSTME-Mobile-Android-iOS/assets/107432307/7a70b9fb-dc33-4067-a031-4431732d4387)
+![Capture](https://github.com/Zaim211/HOSTME-Mobile-Android-iOS/assets/107432307/c4fdaa81-15c9-4380-8668-551a368366f5)
 
 
 ---
