@@ -17,12 +17,16 @@ import { images } from "../../constants";
 import AddressLink from "../../components/AddressLink";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import MapView, { Marker } from 'react-native-maps';
+import Geocoder from 'react-native-geocoding';
+
+Geocoder.init('AIzaSyDHIhYmNoGl0MxgadCeYfNChP3fla7ZToY');
 
 const Hosting = () => {
   const { id } = useLocalSearchParams();
   const [place, setPlace] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const { user } = useGlobalContext();
+  const [coordinates, setCoordinates] = useState(null);
 
   const fetchPlace = async () => {
     if (!id) {
@@ -30,7 +34,11 @@ const Hosting = () => {
     }
     try {
       const response = await client.get(`/api/places/${id}`);
-      setPlace(response?.data);
+      const placeData = response?.data;
+      setPlace(placeData);
+      if (placeData?.address) {
+        handleAddressChange(placeData.address);
+      }
     } catch (error) {
       console.error("Error fetching place:", error);
     }
@@ -44,6 +52,21 @@ const Hosting = () => {
     setRefreshing(true);
     await fetchPlace();
     setRefreshing(false);
+  };
+
+  const handleAddressChange = async (address) => {
+    try {
+      const response = await Geocoder.from(address);
+      const location = response.results[0].geometry.location;
+      setCoordinates({
+        latitude: location.lat,
+        longitude: location.lng,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    } catch (error) {
+      console.error("Error fetching coordinates:", error);
+    }
   };
 
   if (!place) {
@@ -156,21 +179,17 @@ const Hosting = () => {
           <HostingWidget place={place} />
         </View>
 
-        {place.address ? (
-          <View style={styles.mapContainer}>
+        <View style={styles.mapContainer}>
+          {coordinates && (
             <MapView
               style={styles.map}
               provider={MapView.PROVIDER_GOOGLE}
-              region={{
-                
-              }}
-            />
-          </View>
-        ) : (
-          <View style={styles.centeredTextContainer}>
-            <Text style={styles.centeredText}>Location data not available</Text>
-          </View>
-        )}
+              region={coordinates}
+            >
+              <Marker coordinate={coordinates} />
+            </MapView>
+          )}
+        </View>
 
         <View className="flex">
           <Text className="font-pbold mt-2 px-2">Extra Info</Text>
